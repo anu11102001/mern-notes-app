@@ -1,0 +1,174 @@
+:root{
+
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+
+  --bg:#f4f4f4;
+
+  --white:#ffffff;
+
+  --text:#222;
+
+  --gray:#666;
+
+}
+
+*{
+
+  margin:0;
+  padding:0;
+
+  box-sizing:border-box;
+
+  font-family: Arial, sans-serif;
+
+}
+
+body{
+
+  background:var(--bg);
+
+}
+
+
+/* Main Container */
+
+.container{
+
+  width:400px;
+
+  margin:60px auto;
+
+  background:var(--white);
+
+  padding:30px;
+
+  border-radius:12px;
+
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+
+}
+
+
+/* Heading */
+
+h1{
+
+  text-align:center;
+
+  margin-bottom:20px;
+
+  color:var(--text);
+
+}
+
+
+/* Inputs */
+
+input{
+
+  width:100%;
+
+  padding:12px;
+
+  margin-top:12px;
+
+  border:1px solid #ccc;
+
+  border-radius:6px;
+
+  font-size:16px;
+
+}
+
+
+/* Buttons */
+
+button{
+
+  padding:10px 15px;
+
+  margin-top:15px;
+
+  border:none;
+
+  border-radius:6px;
+
+  background:var(--primary);
+
+  color:white;
+
+  font-size:15px;
+
+  cursor:pointer;
+
+  transition:0.3s;
+
+}
+
+button:hover{
+
+  background:var(--primary-dark);
+
+}
+
+
+/* Notes List */
+
+ul{
+
+  list-style:none;
+
+  margin-top:20px;
+
+}
+
+
+li{
+
+  background:#f1f1f1;
+
+  padding:12px;
+
+  border-radius:6px;
+
+  margin-top:10px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+}
+
+
+/* Links */
+
+a{
+
+  color:var(--primary);
+
+  text-decoration:none;
+
+}
+
+
+a:hover{
+
+  text-decoration:underline;
+
+}
+
+
+/* Paragraph */
+
+p{
+
+  text-align:center;
+
+  margin-top:15px;
+
+  color:var(--gray);
+
+}
