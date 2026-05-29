@@ -23,7 +23,7 @@ function Register() {
     try {
 
       const res = await axios.post(
-        axios.post("https://mern-notes-app-s1fc.onrender.com/register"),
+        "https://mern-notes-app-s1fc.onrender.com/register",
         {
           username,
           password
