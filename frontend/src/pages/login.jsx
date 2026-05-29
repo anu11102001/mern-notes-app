@@ -18,7 +18,7 @@ function Login() {
     try {
 
       const res = await axios.post( 
-        "https://mern-notes-app-s1fc.onrender.com ",
+        "https://mern-notes-app-s1fc.onrender.com/login ",
          {
           username,
           password
