@@ -17,9 +17,9 @@ function Login() {
 
     try {
 
-      const res = await axios.post(
-          axios.post("https://mern-notes-app-s1fc.onrender.com ") ,
-        {
+      const res = await axios.post( 
+        "https://mern-notes-app-s1fc.onrender.com ",
+         {
           username,
           password
         }
@@ -35,7 +35,7 @@ function Login() {
     } catch (error) {
 
       alert(
-        error.response.data.message
+        error.response.data.message || error.message
       );
 
     }
