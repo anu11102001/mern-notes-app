@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const User = require("./models/user");
-const Note = require("./models/note");
+const Note = require("./models/notes");
 
 const app = express();
 
