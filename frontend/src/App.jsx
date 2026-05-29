@@ -4,9 +4,9 @@ import {
   Route
 } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Notes from "./pages/Notes";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Notes from "./pages/notes";
 
 function App() {
 
