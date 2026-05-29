@@ -51,7 +51,7 @@ function Notes() {
 
     await axios.post(
 
-      "http://localhost:5000/notes",
+      "https://mern-notes-app-s1fc.onrender.com/notes",
 
       { text },
 
@@ -74,7 +74,7 @@ function Notes() {
 
     await axios.delete(
 
-     axios.get("https://mern-notes-app-s1fc.onrender.com/notes") 
+     "https://mern-notes-app-s1fc.onrender.com/notes"
 
     );
 
