@@ -28,7 +28,7 @@ function Notes() {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/notes",
+        "https://mern-notes-app-s1fc.onrender.com/notes",
         {
           headers: {
             authorization: token
@@ -74,7 +74,7 @@ function Notes() {
 
     await axios.delete(
 
-     "https://mern-notes-app-s1fc.onrender.com/notes"
+     `https://mern-notes-app-s1fc.onrender.com/notes/${id}`
 
     );
 
