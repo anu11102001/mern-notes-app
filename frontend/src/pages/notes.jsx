@@ -74,7 +74,7 @@ function Notes() {
 
     await axios.delete(
 
-      `http://localhost:5000/notes/${id}`
+     axios.get("https://mern-notes-app-s1fc.onrender.com/notes") 
 
     );
 

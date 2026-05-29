@@ -18,7 +18,7 @@ function Login() {
     try {
 
       const res = await axios.post(
-        "http://localhost:5000/login",
+          axios.post("https://mern-notes-app-s1fc.onrender.com ") ,
         {
           username,
           password
