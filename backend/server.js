@@ -11,92 +11,77 @@ const Note = require("./models/note");
 
 const app = express();
 
-
 // Middleware
-
 app.use(cors());
 app.use(express.json());
 
-
-// MongoDB
-
-mongoose.connect(process.env.MONGO_URI)
-
-.then(() => {
-  console.log("✅ MongoDB Connected");
-})
-
-.catch((err) => {
-  console.log(err);
+// Home Route
+app.get("/", (req, res) => {
+  res.send("MERN Notes App Backend Running ");
 });
 
+// MongoDB Connection
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // ================= REGISTER =================
 
 app.post("/register", async (req, res) => {
-
   try {
-
     const { username, password } = req.body;
 
-    const existingUser =
-      await User.findOne({ username });
+    const existingUser = await User.findOne({
+      username,
+    });
 
     if (existingUser) {
-
       return res.status(400).json({
-        message: "User already exists"
+        message: "User already exists",
       });
-
     }
 
     const hashedPassword =
       await bcrypt.hash(password, 10);
 
     const newUser = new User({
-
       username,
-
-      password: hashedPassword
-
+      password: hashedPassword,
     });
 
     await newUser.save();
 
     res.json({
-      message: "Registration Successful"
+      message: "Registration Successful",
     });
-
   } catch (error) {
-
     console.log(error);
 
     res.status(500).json({
-      message: "Server Error"
+      message: "Server Error",
     });
-
   }
-
 });
-
 
 // ================= LOGIN =================
 
 app.post("/login", async (req, res) => {
-
   try {
-
     const { username, password } = req.body;
 
-    const user =
-      await User.findOne({ username });
+    const user = await User.findOne({
+      username,
+    });
 
     if (!user) {
-
       return res.status(400).json({
-        message: "User not found"
+        message: "User not found",
       });
-
     }
 
     const isMatch =
@@ -106,139 +91,138 @@ app.post("/login", async (req, res) => {
       );
 
     if (!isMatch) {
-
       return res.status(400).json({
-        message: "Wrong password"
+        message: "Wrong password",
       });
-
     }
 
     const token = jwt.sign(
-
       { id: user._id },
-
       process.env.JWT_SECRET,
-
       { expiresIn: "1d" }
-
     );
 
     res.json({
-
       token,
-
-      username: user.username
-
+      username: user.username,
     });
-
   } catch (error) {
-
     console.log(error);
 
     res.status(500).json({
-      message: "Server Error"
+      message: "Server Error",
     });
-
   }
-
 });
-
 
 // ================= GET NOTES =================
 
 app.get("/notes", async (req, res) => {
-
   try {
-
     const token =
       req.headers.authorization;
 
-    const decoded =
-      jwt.verify(
-        token,
-        process.env.JWT_SECRET
-      );
-
-    const notes =
-      await Note.find({
-        userId: decoded.id
+    if (!token) {
+      return res.status(401).json({
+        message: "Token required",
       });
+    }
 
-    res.json(notes);
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
-  } catch (error) {
-
-    res.status(401).json({
-      message: "Invalid Token"
+    const notes = await Note.find({
+      userId: decoded.id,
     });
 
+    res.json(notes);
+  } catch (error) {
+    console.log(error);
+
+    res.status(401).json({
+      message: "Invalid Token",
+    });
   }
-
 });
-
 
 // ================= ADD NOTE =================
 
 app.post("/notes", async (req, res) => {
-
   try {
-
     const token =
       req.headers.authorization;
 
-    const decoded =
-      jwt.verify(
-        token,
-        process.env.JWT_SECRET
-      );
+    if (!token) {
+      return res.status(401).json({
+        message: "Token required",
+      });
+    }
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
     const note = new Note({
-
       userId: decoded.id,
-
-      text: req.body.text
-
+      text: req.body.text,
     });
 
     await note.save();
 
     res.json(note);
-
   } catch (error) {
+    console.log(error);
 
     res.status(401).json({
-      message: "Invalid Token"
+      message: "Invalid Token",
     });
-
   }
-
 });
-
 
 // ================= DELETE NOTE =================
 
 app.delete("/notes/:id", async (req, res) => {
-
   try {
+    const token =
+      req.headers.authorization;
 
-    await Note.findByIdAndDelete(
-      req.params.id
+    if (!token) {
+      return res.status(401).json({
+        message: "Token required",
+      });
+    }
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
     );
 
+    const deletedNote =
+      await Note.findOneAndDelete({
+        _id: req.params.id,
+        userId: decoded.id,
+      });
+
+    if (!deletedNote) {
+      return res.status(404).json({
+        message: "Note not found",
+      });
+    }
+
     res.json({
-      message: "Note Deleted"
+      message: "Note Deleted",
     });
-
   } catch (error) {
+    console.log(error);
 
-    res.status(500).json({
-      message: "Server Error"
+    res.status(401).json({
+      message: "Invalid Token",
     });
-
   }
-
 });
-
 
 // ================= SERVER =================
 
@@ -246,9 +230,7 @@ const PORT =
   process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-
   console.log(
     ` Server Running on Port ${PORT}`
   );
-
 });
